@@ -49,7 +49,7 @@ class _PreviewPageState extends State<PreviewPage> {
 
   void afStart() async {
     final AppsFlyerOptions options = AppsFlyerOptions(
-      showDebug: false,
+      showDebug: true,
       afDevKey: 'doJsrj8CyhTUWPZyAYTByE',
       appId: '6496848601',
       timeToWaitForATTUserAuthorization: 15,
@@ -133,15 +133,24 @@ class _PreviewPageState extends State<PreviewPage> {
           ),
           onUpdateVisitedHistory: (controller, url, androidIsReload) {
             if (url!.toString().contains("success")) {
-              _appsflyerSdk.logEvent("CustomEvent3", {
-                "id": {'id': adId},
-              });
+              sendEvent();
               inAppReview.requestReview();
             }
           },
         ),
       ),
     );
+  }
+
+  void sendEvent() async {
+    try {
+      await _appsflyerSdk.logEvent("CustomEvent3", {
+        "id": {'id': adId}
+      });
+      print("success");
+    } catch (e) {
+      print("Error sending event: $e");
+    }
   }
 }
 

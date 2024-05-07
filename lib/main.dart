@@ -97,7 +97,7 @@ Future<void> getTracking() async {
 
 void afStart() async {
   final AppsFlyerOptions options = AppsFlyerOptions(
-    showDebug: false,
+    showDebug: true,
     afDevKey: 'doJsrj8CyhTUWPZyAYTByE',
     appId: '6496848601',
     timeToWaitForATTUserAuthorization: 15,
@@ -155,6 +155,9 @@ void afStart() async {
 
   _appsflyerSdk.startSDK(
     onSuccess: () {
+      _appsflyerSdk.logEvent("testEventNotForAnalytics", {
+        "id": {'id': adId},
+      });
       print("AppsFlyer SDK initialized successfully.");
     },
   );
